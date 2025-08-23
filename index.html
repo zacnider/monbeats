@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="MonBeats Feat" content="Simple Rhythm Game - MonBeats Edition">
+
+    <link rel="icon" type="image/png" href="./logo.png?v=2" />
+    <link rel="stylesheet" href="./dist/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+
+    
+    <script src="./dist/main.js"></script>
+    <script src="./src/keymaster.js"></script>
+
+    <title>MonBeats Feat - Simple Rhythm Game</title>
+</head>
+
+<body>
+    <canvas id="game-canvas" width="1280" height="960"></canvas>
+    
+    <!-- Top Volume Control -->
+    <div id="top-volume-control">
+        <button id="volume-toggle" class="volume-btn">🔊</button>
+        <button id="profile-toggle" class="volume-btn">👤</button>
+        <div id="volume-panel" class="volume-panel">
+            <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="50">
+            <span id="volume-percentage">50%</span>
+        </div>
+    </div>
+    
+    <!-- Profile Panel -->
+    <aside id="profile-panel">
+        <h2 id="profile-header">Profile</h2>
+        <div id="monadgames-auth-container"></div>
+        <button value="close-profile" id="close-profile">Close</button>
+    </aside>
+    
+    <main id="information-display">
+
+        <h1 id="monbeats-title">MonBEATS</h1>
+        <div class="fake-meta" style="color: #444 !important;">
+            <span style="color: #444 !important;">Built on <a href="https://testnet.monad.xyz" target="_blank" style="color: #666; text-decoration: underline;">Monad Testnet</a>, with contributions from the Monad Devs community.</span>
+        </div>
+        <img src="./logo.png?v=2" id="love-arrows" alt="MonBeats Logo">
+        <ul class="desc-game-controls">
+            <li>
+                <button class="opt-btn" id="start">Start Game</button>
+            </li>
+            <li>
+                <button class="opt-btn" id="select-chart">Select Chart</button>
+            </li>
+            <li>
+                <button class="opt-btn" id="leaderboard-btn">Leaderboard</button>
+            </li>
+            <li>
+                <button class="opt-btn" id="options-btn">Options</button>
+            </li>
+            <li>
+                <button class="opt-btn" id="how-to-btn">How to Play</button>
+            </li>
+        </ul>
+
+
+    </main>
+    <aside id="game-opts">
+        <h1 id="game-opts-header">Game Options</h1>
+        <p id="tooltip">You can change the difficulty of the song, the
+            rate at which the arrows will scroll up the scree, and darken the play-area here.
+        </p>
+
+        
+        <h2 id="diff-header">Difficulty Select</h2>
+        <ul class="difficulty">
+            <li>
+                <button class="difficulty-button" data-selected="" data-number="2">2 - Beginner</button>
+            </li>
+            <li>
+                <button class="difficulty-button" data-selected="true" data-number="3">3 - Easy</button>
+            </li>
+            <li>
+                <button class="difficulty-button" data-selected="" data-number="6">6 - Medium</button>
+            </li>
+            <li>
+                <button class="difficulty-button" data-selected="" data-number="8">8 - Hard</button>
+            </li>
+            <li>
+                <button class="difficulty-button" data-selected="" data-number="9">9 - Challenge</button>
+            </li>
+        </ul>
+        <h2 id="scroll-header">Scroll Rate</h2>
+        <h4>note: scroll rate does not dictate the rate you press the notes<br>just
+            how quickly they move up the screen
+        </h4>
+        <ul class="scroll-rate">
+            <li>
+                <button class="speed-button" data-selected="" data-speed="3">3 - Slow</button>
+            </li>
+            <li>
+                <button class="speed-button" data-selected="true" data-speed="5">5 - Normal</button>
+            </li>
+            <li>
+                <button class="speed-button" data-selected="" data-speed="10">10 - Fast</button>
+            </li>
+        </ul>
+        <span id="hide-bg">Darken Lane:
+            <button class="hide-button" data-selected="" value="1">Yes</button>
+            <button class="hide-button" data-selected="true" value="0">No</button>
+        </span>
+        <button value="back-to-main" id="back">Back to main</button>
+    </aside>
+    <!-- In-game volume controls removed - now handled by top volume icon -->
+    <section id="step-statistics-block">
+        <img src="./assets/chart/Bumble Bee/Bumble Bee-banner.png" alt="chart_banner" class="chart-stats" id="chart-banner">
+        <div class="chart-stats" id="difficulty-rating" data-name="">Multiple: 3</div>
+        <ul id="step-statistics">
+            <ul id="artist-info">
+                <li class="chart-stats" id="artist-name" data-name=""></li>
+                <li class="chart-stats" id="song-title" data-name=""></li>
+                <li class="chart-stats" id="difficulty-name" data-name=""></li>
+            </ul>
+            <section id="grid-container">
+                <li class="ss-judgement-grid" id="fantastic">Fantastic:</li>
+                <li class="ss-judgement-grid" id="fCount"></li>
+                <li class="ss-judgement-grid" id="excellent">Excellent:</li>
+                <li class="ss-judgement-grid" id="eCount"></li>
+                <li class="ss-judgement-grid" id="great">Great:</li>
+                <li class="ss-judgement-grid" id="gCount"></li>
+                <li class="ss-judgement-grid" id="decent">Decent:</li>
+                <li class="ss-judgement-grid" id="dCount"></li>
+                <li class="ss-judgement-grid" id="way-off">Way Off:</li>
+                <li class="ss-judgement-grid" id="woCount"></li>
+                <li class="ss-judgement-grid" id="misses">Miss:</li>
+                <li class="ss-judgement-grid" id="missCount"></li>
+                <li class="ss-judgement-grid" id="mines">Mines:</li>
+                <li class="ss-judgement-grid" id="mineCount"></li>
+            </section>
+        </ul>
+            <span class="ss-judgement" id="percentage-score"></span>
+            <span id="judgement" class="stroke" data-judge=""></span>
+            <span class="ss-judgement" id="combo-counter" data-combo=""></span>
+    </section>
+    <!-- GitHub logo and link removed -->
+    <section id="message-screen">
+        <span id="message-message"></span>
+    </section>
+    <aside id="chart-selection">
+        <h1 id="chart-selection-header">🎵 Select Chart</h1>
+        <p id="chart-selection-desc">Choose your favorite chart to play!</p>
+        
+        <ul class="chart-selection">
+            <li>
+                <label for="chart-select">Select Chart:</label>
+                <select id="chart-select" class="chart-dropdown">
+                    <option value="Bumble Bee" selected>Bumble Bee</option>
+                    <option value="drop_pop_candy">Drop Pop Candy</option>
+                    <option value="Agent Blatant">Agent Blatant</option>
+                    <option value="Amore">Amore</option>
+                    <option value="Baby Baby">Baby Baby</option>
+                    <option value="Baby Don't You Want Me">Baby Don't You Want Me</option>
+                    <option value="Birdie">Birdie</option>
+                    <option value="Bloodrush">Bloodrush</option>
+                    <option value="Clockwork Genesis">Clockwork Genesis</option>
+                    <option value="Cryosleep">Cryosleep</option>
+                    <option value="D-Code">D-Code</option>
+                    <option value="Destiny">Destiny</option>
+                    <option value="Determinator">Determinator</option>
+                    <option value="Disconnected Disco">Disconnected Disco</option>
+                    <option value="Energizer">Energizer</option>
+                    <option value="Family Farce ~ TSUHSUIXAMUSH">Family Farce ~ TSUHSUIXAMUSH</option>
+                    <option value="Fleadh Uncut">Fleadh Uncut</option>
+                    <option value="Funk Factory">Funk Factory</option>
+                    <option value="Fuse ~ Titancube">Fuse ~ Titancube</option>
+                    <option value="Get Happy">Get Happy</option>
+                    <option value="Go 60 Go">Go 60 Go</option>
+                    <option value="Habanera 1">Habanera 1</option>
+                    <option value="Hardcore Symphony">Hardcore Symphony</option>
+                    <option value="High">High</option>
+                    <option value="Hillbilly Hardcore">Hillbilly Hardcore</option>
+                    <option value="Hispanic Panic">Hispanic Panic</option>
+                    <option value="Holy Guacamole">Holy Guacamole</option>
+                    <option value="Hustle Beach">Hustle Beach</option>
+                    <option value="Incognito">Incognito</option>
+                    <option value="Ize Pie">Ize Pie</option>
+                    <option value="July -Euromix-">July -Euromix-</option>
+                    <option value="Know Your Enemy">Know Your Enemy</option>
+                    <option value="Life of a Butterfly">Life of a Butterfly</option>
+                    <option value="Lipstick Kiss">Lipstick Kiss</option>
+                    <option value="Liquid Moon">Liquid Moon</option>
+                    <option value="Little Kitty Mine">Little Kitty Mine</option>
+                    <option value="Monolith">Monolith</option>
+                    <option value="Music Pleeze">Music Pleeze</option>
+                    <option value="My Life Is So Crazy">My Life Is So Crazy</option>
+                    <option value="No Princess">No Princess</option>
+                    <option value="One False Move">One False Move</option>
+                    <option value="Pick Me Up & Tango">Pick Me Up & Tango</option>
+                    <option value="Psalm Pilot">Psalm Pilot</option>
+                    <option value="Reactor">Reactor</option>
+                    <option value="Renaissance">Renaissance</option>
+                    <option value="Ride the Bass">Ride the Bass</option>
+                    <option value="Robotix">Robotix</option>
+                    <option value="Soapy Bubble">Soapy Bubble</option>
+                    <option value="Spaceman">Spaceman</option>
+                    <option value="Spacy Crazy Girl">Spacy Crazy Girl</option>
+                    <option value="Spin Chicken">Spin Chicken</option>
+                    <option value="Summer in Belize">Summer in Belize</option>
+                    <option value="Summer Speedy Mix">Summer Speedy Mix</option>
+                    <option value="Sunshine">Sunshine</option>
+                    <option value="Sweet World">Sweet World</option>
+                    <option value="Temple of Boom">Temple of Boom</option>
+                    <option value="The Message">The Message</option>
+                    <option value="This is Rock & Roll">This is Rock & Roll</option>
+                    <option value="Tribal Style">Tribal Style</option>
+                    <option value="Twilight">Twilight</option>
+                    <option value="Typical Tropical">Typical Tropical</option>
+                    <option value="VerTex^2">VerTex^2</option>
+                    <option value="Visible Noise">Visible Noise</option>
+                    <option value="Vorsprung Durch Techno">Vorsprung Durch Techno</option>
+                    <option value="Wake Up">Wake Up</option>
+                    <option value="Wanna Do">Wanna Do</option>
+                    <option value="We Know What To Do">We Know What To Do</option>
+                    <option value="Out Of The Dark">Out Of The Dark</option>
+                </select>
+            </li>
+        </ul>
+        
+        <button value="back-to-main" id="back-chart-selection">Back to main</button>
+    </aside>
+    
+    <aside id="how-to-play">
+        <h1 id="how-to-header">How to Play</h1>
+        <p id="how-to-desc">Learn how to play MonBeats Feat and master the rhythm game!</p>
+        
+        <h2 id="objective-header">🎯 Objective</h2>
+        <p>Hit the arrows when they reach the targets at the top of the screen. The better your timing, the better your score!</p>
+        
+        <h2 id="controls-header">🎮 Controls</h2>
+        <p>Use the <strong>Arrow Keys</strong> to control your character:</p>
+        <ul class="controls-list">
+            <li>
+                <svg class="arrow-key left-arrow" viewBox="0 0 24 24" width="40" height="40">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" fill="#FFD700"/>
+                </svg>
+                Left Arrow
+            </li>
+            <li>
+                <svg class="arrow-key down-arrow" viewBox="0 0 24 24" width="40" height="40">
+                    <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" fill="#FFD700"/>
+                </svg>
+                Down Arrow
+            </li>
+            <li>
+                <svg class="arrow-key up-arrow" viewBox="0 0 24 24" width="40" height="40">
+                    <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6 1.41-1.41z" fill="#FFD700"/>
+                </svg>
+                Up Arrow
+            </li>
+            <li>
+                <svg class="arrow-key right-arrow" viewBox="0 0 24 24" width="40" height="40">
+                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z" fill="#FFD700"/>
+                </svg>
+                Right Arrow
+            </li>
+        </ul>
+        
+        <h2 id="scoring-header">🏆 Scoring System</h2>
+        <div class="scoring-list">
+            <div class="score-row">
+                <span class="score-label">Fantastic:</span>
+                <span class="score-value">+1000 points</span>
+            </div>
+            <div class="score-row">
+                <span class="score-label">Excellent:</span>
+                <span class="score-value">+800 points</span>
+            </div>
+            <div class="score-row">
+                <span class="score-label">Great:</span>
+                <span class="score-value">+600 points</span>
+            </div>
+            <div class="score-row">
+                <span class="score-label">Decent:</span>
+                <span class="score-value">+400 points</span>
+            </div>
+            <div class="score-row">
+                <span class="score-label">Way Off:</span>
+                <span class="score-value">+200 points</span>
+            </div>
+            <div class="score-row">
+                <span class="score-label">Miss:</span>
+                <span class="score-value">0 points</span>
+            </div>
+        </div>
+        <p><strong>Higher score = Better timing!</strong></p>
+        
+        <h2 id="health-header">❤️ Health System</h2>
+        <p>• <strong>Hitting arrows</strong> restores health</p>
+        <p>• <strong>Missing arrows</strong> reduces health</p>
+        <p>• <strong>Hitting mines</strong> damages health</p>
+        <p>• <strong>Game over</strong> when health reaches 0</p>
+        
+        <h2 id="options-header">⚙️ Game Options</h2>
+        <p>• <strong>Difficulty:</strong> Choose from 2 (Beginner) to 9 (Challenge)</p>
+        <p>• <strong>Scroll Speed:</strong> Adjust how fast arrows move</p>
+        <p>• <strong>Background Dimming:</strong> Darken the play area for focus</p>
+        
+        <button value="back-to-main" id="back-how-to">Back to main</button>
+    </aside>
+    <!-- Yeni End Screen -->
+    <section id="end-screen" class="end-screen-overlay">
+        <div class="end-screen-container">
+            <div class="end-screen-header">
+                <h1 id="end-screen-title">Game Complete!</h1>
+                <div id="end-screen-result" class="result-badge">Victory</div>
+            </div>
+            
+            <div class="score-display">
+                <div class="final-score">
+                    <span class="score-label">Final Score</span>
+                    <span id="final-score-value" class="score-value">0</span>
+                </div>
+            </div>
+            
+            <div class="end-screen-actions">
+                <button id="home-new" class="opt-btn">Home</button>
+            </div>
+            
+            <div id="save-status" class="save-status" style="display: none;"></div>
+        </div>
+            
+            <div id="save-status" class="save-status" style="display: none;">
+                <span id="save-message">Saving score...</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Eski End Screen (gizli, fallback için) -->
+    <section id="end-screen-old" style="display: none;">
+        <span id="end-message"></span>
+        <button id="save-score" style="display: none;">Save Score to Leaderboard</button>
+        <button id="home">Home</button>
+    </section>
+    </section>
+    
+    <!-- Leaderboard Pencere -->
+    <aside id="leaderboard">
+        <h1 id="leaderboard-header">Leaderboard</h1>
+        <p id="leaderboard-desc">Top 20 players and your best score!</p>
+        
+        <!-- Kullanıcı Skoru -->
+        <div id="user-score-section">
+            <h2>Your Best Score</h2>
+            <div id="user-best-score">Loading...</div>
+        </div>
+        
+        <!-- Top 20 Liderboard -->
+        <div id="top-scores-section">
+            <h2>Top 20 Players</h2>
+            <div id="top-scores-list">
+                <div class="loading">Loading leaderboard...</div>
+            </div>
+        </div>
+        
+        <button value="back-to-main" id="back-leaderboard">Back to main</button>
+    </aside>
+</body>
+
+</html>
