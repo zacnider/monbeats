@@ -1,0 +1,7 @@
+[X] Convert .dwi to .sm if needed
+[X] Delete extra useless files
+[X] Reverse all real names back to stepartist's nickname (if applicable)
+[X] Fix Credits & Metadata
+[X] Add/Remove Graphics (if missing)
+[X] Clean up folder names
+[X] Remove OGGLengthPatch
