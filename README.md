@@ -107,23 +107,6 @@ chmod +x quick-deploy.sh
 ./quick-deploy.sh
 ```
 
-#### Manual Deployment
-1. **Setup server environment**
-   ```bash
-   # Copy deployment guide
-   scp DEPLOYMENT_GUIDE.md root@YOUR_SERVER_IP:/root/
-   
-   # Follow the deployment guide
-   ssh root@YOUR_SERVER_IP
-   ```
-
-2. **Deploy with Docker**
-   ```bash
-   # On the server
-   cd /opt/monbeats
-   docker-compose up -d
-   ```
-
 ## 🎮 Game Features
 
 ### Charts & Music
@@ -234,13 +217,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Website**: [https://your-domain.com](https://your-domain.com)
-- **Issues**: [GitHub Issues](https://github.com/your-username/monbeats-feat/issues)
-- **Email**: admin@your-domain.com
+- **Website**: [https://monbeats.live](https://monbeats.live)
+- **Issues**: [GitHub Issues](https://github.com/zacnider/monbeats/issues)
+- **Email**: nihataltuntas@gmail.com
 
 ## 🚀 Deployment Status
 
-- **Production**: ✅ Live at [your-domain.com](https://your-domain.com)
+- **Production**: ✅ Live at [https://monbeats.live](https://monbeats.live)
 - **Server**: YOUR_SERVER_IP
 - **SSL**: ✅ Let's Encrypt
 - **Database**: ✅ MongoDB
@@ -248,4 +231,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Made with ❤️ for the rhythm game community
