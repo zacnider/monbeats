@@ -13,7 +13,7 @@ A rhythm game with MonadGames integration, featuring score tracking, leaderboard
 
 ## 🚀 Live Demo
 
-Visit [https://monbeats.live](monbeats) to play the game!
+Visit ([monbeats](https://monbeats.live)) to play the game!
 
 ## 🛠 Technology Stack
 
