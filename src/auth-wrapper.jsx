@@ -144,7 +144,7 @@ function MonadGamesAuth() {
 // Main App Component
 function AuthApp() {
   return React.createElement(PrivyProvider, {
-    appId: 'cmeg2vp8i00evk30a8e99luiv',
+    appId: 'your privy app id',
     config: {
       loginMethodsAndOrder: {
         primary: ['privy:cmd8euall0037le0my79qpz42'],
